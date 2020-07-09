@@ -1,0 +1,21 @@
+{
+  "name": "dx-gen",
+  "version": "0.0.5",
+  "description": "Generate Node Express Project and apis.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "bin": {
+    "dx-gen": "./index.js"
+  },
+  "author": "ghimakarreddy",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^5.1.0",
+    "copy-dir": "^1.3.0",
+    "ejs": "^3.1.3",
+    "joigoose": "^7.1.0"
+  }
+}

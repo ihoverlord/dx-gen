@@ -1,0 +1,6 @@
+const mongoose = require('mongoose');
+const Joigoose = require("joigoose")(Mongoose, null, { timestamps: true });
+
+const <%= name %>Schema = new Mongoose.Schema(Joigoose.convert(joiUserSchema, options));
+
+module.exports = mongoose.model('<%= name %>', <%= name %>Schema);

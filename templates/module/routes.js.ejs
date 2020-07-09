@@ -1,0 +1,18 @@
+const express = require('express')
+const router = express.Router()
+const <%= name %>Controller = require('./controller')
+const <%= name %>Validator = require('./validator')
+const tokenMiddleware = require('../../middlewares/verifyToken')
+const validator = require('express-joi-validation').createValidator({ passError: true })
+
+router.post('/all', [<%= name %>Controller.getAll])
+
+router.get('/:id', [validator.query(<%= name %>Validator.getByIdSchema, { joi: { allowUnknown: false } }), <%= name %>Controller.getById])
+
+router.post('/', [validator.body(<%= name %>Validator.createSchema, { joi: { allowUnknown: false } }), <%= name %>Controller.create])
+
+router.put('/:id', [validator.query(<%= name %>Validator.updateByIdSchema, { joi: { allowUnknown: false } }), validator.body(<%= name %>Validator.updateByIdBodySchema, { joi: { allowUnknown: false } }), <%= name %>Controller.updateById])
+
+router.delete('/:id', [validator.query(<%= name %>Validator.deleteByIdSchema, { joi: { allowUnknown: false } }), <%= name %>Controller.deleteById])
+
+module.exports = router

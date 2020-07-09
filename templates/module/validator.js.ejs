@@ -1,0 +1,23 @@
+const Joi = require('@hapi/joi')
+
+const createSchema = Joi.object({
+    name: Joi.string().required()
+})
+
+const getByIdSchema = Joi.object({
+    id: Joi.string().required()
+})
+
+const updateByIdSchema = Joi.object({
+    id: Joi.string().required()
+})
+
+const updateByIdBodySchema = Joi.object({
+    name: Joi.string().string()
+})
+
+const deleteByIdSchema = Joi.object({
+    id: Joi.string().required()
+})
+
+module.exports = { createSchema, getByIdSchema, updateByIdSchema, updateByIdBodySchema, deleteByIdSchema }

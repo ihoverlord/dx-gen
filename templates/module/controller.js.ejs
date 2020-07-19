@@ -8,28 +8,36 @@ const getAll = (req, res, next) => {
 }
 
 const getById = (req, res, next) => {
-    const { id } = req.body
-    <%= name %>Model.find({ id })
-        .then(() => res.send({ error: false, content: data }))
+    const _id = req.params.id
+    <%= name %>Model.find({ _id })
+        .then((data) => res.send({ error: false, content: data }))
+        .catch((error) => { res.send({ error: true, message: error }) })
+}
+
+const getDocsByFilter = (req, res, next) => {
+    const data = req.body
+    <%= name %>Model.find(data)
+        .then((x) => res.send({ error: false, content: x }))
         .catch((error) => { res.send({ error: true, message: error }) })
 }
 
 const create = (req, res, next) => {
-    <%= name %>Model.save(req.body)
+    <%= name %>Model.create(req.body)
         .then(() => res.send({ error: false, message: 'Created Successfully!' }))
         .catch((error) => { res.send({ error: true, message: error }) })
 }
 
 const updateById = (req, res, next) => {
-    const { id, data } = req.body
-    <%= name %>Model.updateOne({ id, data })
-        .then(() => res.send({ error: false, message: 'updated Successfully!' }))
+    const _id = req.params.id
+    const data = req.body
+    <%= name %>Model.updateOne({ _id }, data, { upsert: true, new: true })
+        .then((x) => res.send({ error: false, message: 'updated Successfully!', content: x }))
         .catch((error) => { res.send({ error: true, message: error }) })
 }
 
 const deleteById = (req, res, next) => {
-    const { id } = req.body
-    <%= name %>Model.deleteOne({ id })
+    const _id = req.params.id
+    <%= name %>Model.deleteOne({ _id })
         .then(() => res.send({ error: false, message: 'Deleted Successfully!' }))
         .catch((error) => { res.send({ error: true, message: error }) })
 }

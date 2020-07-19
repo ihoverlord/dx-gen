@@ -13,7 +13,7 @@ const updateByIdSchema = Joi.object({
 })
 
 const updateByIdBodySchema = Joi.object({
-    name: Joi.string().string()
+    name: Joi.string().required()
 })
 
 const deleteByIdSchema = Joi.object({

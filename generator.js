@@ -1,6 +1,7 @@
 const fs = require('fs')
 const ejs = require('ejs')
 const copydir = require('copy-dir');
+const shell = require('shelljs')
 
 const isAValidName = (name) => {
     return /^[a-zA-Z]+$/.test(name) 
@@ -18,7 +19,10 @@ const createFile = (path, fileName, moduleName) => {
     });
 }
 
+const isProjectDir = (path) => fs.existsSync(`${path}/package.json`) 
+
 const api = (name) => {
+    if(!isProjectDir) return console.log('   You are not in a Project directory')
     const moduleName = name.toLowerCase()
     if(!isAValidName(moduleName)) return console.log('Name string is not in format [[a-zA-Z]]')
     if (!fs.existsSync('src')) { fs.mkdirSync('src'); console.log('  Folder created : `/src`')}
@@ -32,6 +36,7 @@ const api = (name) => {
     for(let x of arr) {
         createFile(folderPath, x, moduleName)
     }
+
 }
 
 const packageJson = (name) => {
@@ -70,14 +75,18 @@ const project = (name) => {
     copydir(fromDir, toDir, (err) => {
         if (err) return console.error('3. '+err.toString());
         fs.writeFileSync(toDir+'/package.json', JSON.stringify(packageJson(moduleName), null, 4), 'utf8')
-        console.log('Project generated!')
-        console.log('Have a nice day!!')
+        console.log('   Project generated!')
+        console.log('   run : `npm i` inside the project directory')
+        console.log('   Have a nice day!!')
+
+
     })
 
 }
 
 
 const auth = () => {
+    if(!isProjectDir) return console.log('   You are not in a Project directory')
     const fromDir = (__dirname).replace(/\\/g, "/") + '/templates/auth'
     const toDir = (process.cwd()).replace(/\\/g, "/") + `/src/api/auth`
     if (!fs.existsSync('src')) { fs.mkdirSync('src'); console.log('  Folder created : `/src`')}
@@ -87,7 +96,8 @@ const auth = () => {
     else fs.mkdirSync(toDir)
     copydir(fromDir, toDir, (err) => {
         if (err) return console.error('4. '+err.toString());
-        console.log('Auth Module generated!')
+        shell.exec('npm i bcrypt jsonwebtoken')
+        console.log('   Auth Module generated!')
     })
 
 }

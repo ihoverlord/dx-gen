@@ -15,24 +15,24 @@ const generateHash = (password) => {
     })
 }
 
-const comparePasswords = (dbPass, userPass) => {
+const comparePasswords = (user, userPass) => {
     return new Promise((Resolve, Reject) => {
-        bcrypt.compare(userPass, dbPass, (err, hash) => {
+        bcrypt.compare(userPass, user.password, (err, hash) => {
             if (err) Reject(err)
-            else if (hash) Resolve()
+            else if (hash) Resolve(user)
             else Reject('username / password do not match.')
         });
     })
 }
 
-const userDoesntExist = (user) => {
+const userShouldntExist = (user) => {
     return new Promise((Resolve, Reject) => {
-        if (user && user.length > 0) Reject(`email '${email}' already registered.`)
+        if (user && user.length > 0) Reject(`email already registered.`)
         Resolve()
     })
 }
 
-const userExist = (user) => {
+const userShouldExist = (user) => {
     return new Promise((Resolve, Reject) => {
         if (user && user.length > 0) Resolve(user)
         Reject(`email '${email}' not registered.`)
@@ -40,4 +40,4 @@ const userExist = (user) => {
 }
 
 
-module.exports = { generateHash, comparePasswords, encodeJwtToken, decodeJwtToken, userDoesntExist, userExist }
+module.exports = { generateHash, comparePasswords, encodeJwtToken, decodeJwtToken, userShouldntExist, userShouldExist }

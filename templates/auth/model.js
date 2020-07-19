@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uuid = require('uuid');
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -7,12 +8,16 @@ const userSchema = new mongoose.Schema({
         index: true,
         unique: true
     },
-    name: { 
+    username: { 
         type: String
     },
     password: { 
         type: String, 
         required: true
+    },
+    userId: {
+        type: String,
+        default: uuid.v4()
     }
 }, { timestamps: true });
 

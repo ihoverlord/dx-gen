@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 // import all routes
-require('./src/api/routes')(app);
+require('./src/routes')(app);
 
 app.use(function (req, res, next) {
     res.status(404).send({ error: true, message: "Sorry can't find that route!" })
